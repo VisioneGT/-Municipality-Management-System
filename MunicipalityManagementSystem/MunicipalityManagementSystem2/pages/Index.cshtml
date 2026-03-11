@@ -1,0 +1,103 @@
+﻿@page
+@model YourNamespace.Pages.IndexModel
+
+<h2>Citizen Data Log</h2>
+
+@if (Model.Citizens.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Address</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Date of Birth</th>
+                <th>Registration Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var citizen in Model.Citizens)
+            {
+                <tr>
+                    <td>@citizen.CitizenId</td>
+                    <td>@citizen.FullName</td>
+                    <td>@citizen.Address</td>
+                    <td>@citizen.PhoneNumber</td>
+                    <td>@citizen.Email</td>
+                    <td>@citizen.DateOfBirth?.ToString("yyyy-MM-dd")</td>
+                    <td>@citizen.RegistrationDate.ToString("yyyy-MM-dd")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No citizens registered yet.</p>
+}
+
+<h2>Create Citizen</h2>
+<form method="post">
+    <div class="form-group">
+        <label for="FullName">Full Name</label>
+        <input type="text" id="FullName" class="form-control" asp-for="Citizen.FullName" />
+    </div>
+
+    <div class="form-group">
+        <label for="Address">Address</label>
+        <input type="text" id="Address" class="form-control" asp-for="Citizen.Address" />
+    </div>
+
+    <div class="form-group">
+        <label for="PhoneNumber">Phone Number</label>
+        <input type="text" id="PhoneNumber" class="form-control" asp-for="Citizen.PhoneNumber" />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" class="form-control" asp-for="Citizen.Email" />
+    </div>
+
+    <div class="form-group">
+        <label for="DateOfBirth">Date of Birth</label>
+        <input type="date" id="DateOfBirth" class="form-control" asp-for="Citizen.DateOfBirth" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<h2>Delete Citizen</h2>
+<form method="post" asp-page-handler="Delete">
+    <div class="form-group">
+        <label for="CitizenId">Citizen ID</label>
+        <input type="number" id="CitizenId" name="citizenId" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+
+<h2>Update Citizen</h2>
+<form method="post" asp-page-handler="Update">
+    <div class="form-group">
+        <label for="CitizenId">Citizen ID</label>
+        <input type="number" id="CitizenId" name="citizenId" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="FullName">Full Name</label>
+        <input type="text" id="FullName" name="FullName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Address">Address</label>
+        <input type="text" id="Address" name="Address" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="PhoneNumber">Phone Number</label>
+        <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+</form>

@@ -1,0 +1,82 @@
+﻿@page
+@model YourNamespace.Pages.PrivacyModel
+@{
+    ViewData["Title"] = "Submit Service Request";
+}
+
+<h2>Service Requests</h2>
+
+@if (Model.ServiceRequests != null && Model.ServiceRequests.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Request ID</th>
+                <th>Citizen ID</th>
+                <th>Service Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model.ServiceRequests)
+            {
+                <tr>
+                    <td>@request.RequestID</td>
+                    <td>@request.CitizenID</td>
+                    <td>@request.ServiceType</td>
+                    <td>@request.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No service requests available.</p>
+}
+
+<h1>Submit Service Request</h1>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Citizen ID</label>
+        <input asp-for="ServiceRequest.CitizenID" class="form-control" required />
+        <span asp-validation-for="ServiceRequest.CitizenID" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Service Type</label>
+        <input asp-for="ServiceRequest.ServiceType" class="form-control" required />
+        <span asp-validation-for="ServiceRequest.ServiceType" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Request</button>
+</form>
+
+<h2>Update Service Request Status</h2>
+
+<form method="post" asp-page-handler="UpdateStatus">
+    <div class="mb-3">
+        <label class="form-label">Request ID to Update Status</label>
+        <input asp-for="UpdateRequestID" class="form-control" required />
+        <span asp-validation-for="UpdateRequestID" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-secondary">Update Status</button>
+</form>
+
+<h2>Delete Service Request</h2>
+
+<form method="post" asp-page-handler="Delete">
+    <div class="mb-3">
+        <label class="form-label">Request ID to Delete</label>
+        <input asp-for="DeleteRequestID" class="form-control" required />
+        <span asp-validation-for="DeleteRequestID" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-danger">Delete Request</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
